@@ -337,5 +337,3 @@ ALTER TABLE account DROP COLUMN password;
 ```
 
 ---
-
-*End of Notes.*
