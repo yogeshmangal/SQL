@@ -337,3 +337,47 @@ ALTER TABLE account DROP COLUMN password;
 ```
 
 ---
+
+## 14. How to Get the Second Highest Salary in SQL
+
+There are multiple ways to get the **second highest salary** from a table (e.g., `employees`).
+
+---
+
+### 🔹 Option 1: Using `LIMIT` with `OFFSET` (MySQL / PostgreSQL)
+
+```sql
+SELECT DISTINCT salary
+FROM employees
+ORDER BY salary DESC
+LIMIT 1 OFFSET 1;
+```
+
+### 🔹 Option 2: Using `MAX()` with Subquery
+```sql
+SELECT MAX(salary)
+FROM employees
+WHERE salary < (SELECT MAX(salary) FROM employees);
+```
+
+### 🔹 Option 3: Using `DENSE_RANK()`
+```sql
+SELECT salary
+FROM (
+    SELECT salary, DENSE_RANK() OVER (ORDER BY salary DESC) AS rnk
+    FROM employees
+) ranked_salaries
+WHERE rnk = 2;
+```
+
+### 🔹 Option 4: Using `ROW_NUMBER()`
+```sql
+SELECT salary
+FROM (
+    SELECT salary, ROW_NUMBER() OVER (ORDER BY salary DESC) AS row_num
+    FROM employees
+) ranked_salaries
+WHERE row_num = 2;
+```
+
+---
