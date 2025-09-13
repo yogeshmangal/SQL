@@ -381,3 +381,20 @@ WHERE row_num = 2;
 ```
 
 ---
+
+## 15. Bulk Insert
+
+There are two ways to perform bulk inserts:
+
+### a) Using Temp Tables
+```sql
+INSERT INTO Users#temp (fName, lName) VALUES ('A', 'B');
+INSERT INTO Users#temp (fName, lName) VALUES ('C', 'D');
+
+INSERT INTO Users (fName, lName) SELECT fName, lName FROM Users#temp;
+```
+
+### b) Multi-Value Insert
+```sql
+INSERT INTO Users (fName, lName) VALUES ('A', 'B'), ('C', 'D');
+```
